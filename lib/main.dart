@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:futter_stable/mongo.dart';
 import 'package:futter_stable/homepage.dart';
-//import 'package:mongo_dart/mongo_dart.dart';
+import 'package:futter_stable/login.dart';
+import 'package:futter_stable/password_forgot.dart';
+import 'package:futter_stable/user_provider.dart';
+import 'package:futter_stable/reset_password.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   var db = await MongoDataBase.connect();
@@ -9,24 +13,28 @@ Future<void> main() async {
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key, this.db});
-
+  const MainApp({Key? key, required this.db}) : super(key: key);
 
   final dynamic db;
+
   @override
   Widget build(BuildContext context) {
-
-        return MaterialApp(
-      title: 'Horse',
-      debugShowCheckedModeBanner: false,
-      routes: {
-        '/': (context) => HomePage(db: db),
-      },
-      theme: ThemeData(
-        primarySwatch: Colors.orange,
-        scaffoldBackgroundColor: Colors.white.withAlpha(12000),
+    return ChangeNotifierProvider(
+      create: (context) => UserProvider(),
+      child: MaterialApp(
+        title: 'Horse',
+        debugShowCheckedModeBanner: false,
+        routes: {
+          '/': (context) => LoginPage(db: db),
+          '/home': (context) => HomePage(db: db),
+          '/passwordForgot': (context) => ForgotPage(db: db),
+          '/resetPassword': (context) => ResetPage(db: db),
+        },
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        ),
       ),
     );
-
   }
 }
