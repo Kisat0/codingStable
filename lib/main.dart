@@ -1,19 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:futter_stable/pages/mongo.dart';
+//import 'package:mongo_dart/mongo_dart.dart';
 
-void main() {
-  runApp(const MainApp());
+
+import 'pages/home_page.dart';
+
+Future<void> main() async {
+  var db = await MongoDataBase.connect();
+  runApp(MainApp(db: db));
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  const MainApp({super.key, this.db});
 
+  final db;
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+        return MaterialApp(
+      title: 'Horse',
+      debugShowCheckedModeBanner: false,
+      routes: {
+        '/': (context) => MyHomePage(db: db),
+      },
+      theme: ThemeData(
+        primarySwatch: Colors.orange,
+        scaffoldBackgroundColor: Colors.white.withAlpha(12000),
       ),
     );
   }
