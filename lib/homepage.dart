@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final dynamic db;
+
+  const HomePage({Key? key, this.db}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();

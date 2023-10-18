@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'homepage.dart';
-import 'package:futter_stable/pages/mongo.dart';
+import 'package:futter_stable/mongo.dart';
+import 'package:futter_stable/homepage.dart';
 //import 'package:mongo_dart/mongo_dart.dart';
-
-
-import 'pages/home_page.dart';
 
 Future<void> main() async {
   var db = await MongoDataBase.connect();
@@ -15,7 +12,7 @@ class MainApp extends StatelessWidget {
   const MainApp({super.key, this.db});
 
 
-  final db;
+  final dynamic db;
   @override
   Widget build(BuildContext context) {
 
@@ -23,7 +20,7 @@ class MainApp extends StatelessWidget {
       title: 'Horse',
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => MyHomePage(db: db),
+        '/': (context) => HomePage(db: db),
       },
       theme: ThemeData(
         primarySwatch: Colors.orange,
