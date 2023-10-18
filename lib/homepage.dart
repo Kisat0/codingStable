@@ -56,16 +56,18 @@ class _HomePageState extends State<HomePage> {
               selectedIcon: Icon(Icons.home),
               icon: Icon(Icons.home_outlined),
               label: 'Soirée'),
-
-              NavigationDestination(
+          NavigationDestination(
               selectedIcon: Icon(Icons.home),
               icon: Icon(Icons.home_outlined),
               label: 'Entraînement'),
-
-              NavigationDestination(
+          NavigationDestination(
               selectedIcon: Icon(Icons.home),
               icon: Icon(Icons.home_outlined),
               label: 'Admin'),
+          NavigationDestination(
+              selectedIcon: Icon(Icons.home),
+              icon: Icon(Icons.home_outlined),
+              label: 'Test'),
         ],
       ),
       body: <Widget>[
@@ -101,20 +103,21 @@ class _HomePageState extends State<HomePage> {
           alignment: Alignment.center,
           child: const Text('Page 8'),
         ),
-
         Container(
           alignment: Alignment.center,
           child: const Text('Page 9'),
         ),
-
         Container(
           alignment: Alignment.center,
           child: const Text('Page 10'),
         ),
-
         Container(
           alignment: Alignment.center,
           child: const Text('Page 11'),
+        ),
+        Container(
+          alignment: Alignment.center,
+          child: const Text('Page 12'),
         ),
       ][currentPageIndex],
     );
