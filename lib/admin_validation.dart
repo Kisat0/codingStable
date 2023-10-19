@@ -17,7 +17,17 @@ class _AdminValidationState extends State<AdminValidation> {
   @override
   void initState() {
     super.initState();
+
     role = Provider.of<UserProvider>(context, listen: false).loggedInUser!.role;
+
+    Future.delayed(Duration.zero, () {
+      if (role != 'admin') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Vous n\'êtes pas autorisé à accéder à cette page')),
+        );
+        Navigator.pushNamed(context, '/home');
+      }
+    });
   }
 
   Future<List<dynamic>> getNotValidatedCourses() async {
@@ -34,9 +44,6 @@ class _AdminValidationState extends State<AdminValidation> {
 
   @override
   Widget build(BuildContext context) {
-    if (role != 'admin') {
-      Navigator.pushNamed(context, '/home');
-    }
     return DefaultTabController(
         length: 2,
         child: Scaffold(
