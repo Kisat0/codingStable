@@ -5,7 +5,9 @@ import 'package:futter_stable/parties/listeparties.dart';
 import 'trainings/pagetrainings.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final dynamic db;
+
+  const HomePage({Key? key, this.db}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -114,7 +116,7 @@ class _HomePageState extends State<HomePage> {
         ),
         Container(
           alignment: Alignment.center,
-          child: const Text('Page 10'),
+          child: AdminValidation(db: widget.db),
         ),
         Container(
           alignment: Alignment.center,
