@@ -17,7 +17,6 @@ class _AdminValidationState extends State<AdminValidation> {
   @override
   void initState() {
     super.initState();
-    // Assuming you have a way to get the user's role, replace 'getUserRole()' with your actual logic
     role = Provider.of<UserProvider>(context, listen: false).loggedInUser!.role;
   }
 
@@ -55,51 +54,6 @@ class _AdminValidationState extends State<AdminValidation> {
             content: Text('Erreur lors de la validation de la demande')),
       );
     }
-  }
-
-  void validateParty(List<dynamic> party) {
-    try {
-      var collection = widget.db.collection('parties');
-      collection.replaceOne({
-        '_id': party[0]['_id']
-      }, {
-        'theme': party[0]['theme'],
-        'picture': party[0]['picture'],
-        'date': party[0]['date'],
-        'isVerified': true,
-        'idsUsers': party[0]['idsUsers'],
-        'com': party[0]['com'],
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Demande acceptée')),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Erreur lors de la validation de la demande')),
-      );
-    }
-  }
-
-  void deleteCourse(List<dynamic> course) {
-    var collection = widget.db.collection('courses');
-    try {
-      collection.deleteOne({'_id': course[0]['_id']});
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Demande refusée')),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Erreur lors de la suppression de la demande')),
-      );
-    }
-  }
-
-  void deleteParty(List<dynamic> party) {
-    var collection = widget.db.collection('parties');
-    collection.deleteOne({'_id': party[0]['_id']});
   }
 
   @override
@@ -141,12 +95,61 @@ class _AdminValidationState extends State<AdminValidation> {
                                   TextButton(
                                     child: const Text('Valider'),
                                     onPressed: () {
-                                      validateCourse(snapshot.data?[index]);
+                                      try {
+                                        var collection =
+                                            widget.db.collection('courses');
+                                        collection.replaceOne({
+                                          '_id': snapshot.data?[index]['_id']
+                                        }, {
+                                          'terrain': snapshot.data?[index]
+                                              ['terrain'],
+                                          'duration': snapshot.data?[index]
+                                              ['duration'],
+                                          'speciality': snapshot.data?[index]
+                                              ['speciality'],
+                                          'isVerified': true,
+                                          'date': snapshot.data?[index]['date'],
+                                          'idsUsers': snapshot.data?[index]
+                                              ['idsUsers'],
+                                        });
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                              content:
+                                                  Text('Demande acceptée')),
+                                        );
+                                      } catch (e) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                              content: Text(
+                                                  'Erreur lors de la validation de la demande')),
+                                        );
+                                      }
                                     },
                                   ),
                                   TextButton(
                                       onPressed: () {
-                                        deleteCourse(snapshot.data?[index]);
+                                        var collection =
+                                            widget.db.collection('courses');
+                                        try {
+                                          collection.deleteOne({
+                                            '_id': snapshot.data?[index]['_id']
+                                          });
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                                content:
+                                                    Text('Demande refusée')),
+                                          );
+                                        } catch (e) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                                content: Text(
+                                                    'Erreur lors de la suppression de la demande')),
+                                          );
+                                        }
                                       },
                                       child: const Text('Refuser'))
                                 ],
@@ -183,12 +186,61 @@ class _AdminValidationState extends State<AdminValidation> {
                                   TextButton(
                                     child: const Text('Valider'),
                                     onPressed: () {
-                                      validateParty(snapshot.data?[index]);
+                                      try {
+                                        var collection =
+                                            widget.db.collection('parties');
+                                        collection.replaceOne({
+                                          '_id': snapshot.data?[index]['_id']
+                                        }, {
+                                          'theme': snapshot.data?[index]
+                                              ['theme'],
+                                          'picture': snapshot.data?[index]
+                                              ['picture'],
+                                          'date': snapshot.data?[index]['date'],
+                                          'isVerified': true,
+                                          'idsUsers': snapshot.data?[index]
+                                              ['idsUsers'],
+                                          'com': snapshot.data?[index]['com'],
+                                        });
+
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                              content:
+                                                  Text('Demande acceptée')),
+                                        );
+                                      } catch (e) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                              content: Text(
+                                                  'Erreur lors de la validation de la demande')),
+                                        );
+                                      }
                                     },
                                   ),
                                   TextButton(
                                       onPressed: () {
-                                        deleteParty(snapshot.data?[index]);
+                                        var collection =
+                                            widget.db.collection('parties');
+                                        try {
+                                          collection.deleteOne({
+                                            '_id': snapshot.data?[index]['_id']
+                                          });
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                                content:
+                                                    Text('Demande refusée')),
+                                          );
+                                        } catch (e) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                                content: Text(
+                                                    'Erreur lors de la suppression de la demande')),
+                                          );
+                                        }
                                       },
                                       child: const Text('Refuser'))
                                 ],
