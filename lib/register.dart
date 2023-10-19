@@ -5,9 +5,10 @@ import 'package:mongo_dart/mongo_dart.dart' as mongo;
 import 'models/UserModel.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key, required this.title});
+  const RegisterPage({super.key, required this.title, required this.db});
 
   final String title;
+  final dynamic db;
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -71,6 +72,15 @@ class _RegisterPageState extends State<RegisterPage> {
               TextField(
                 controller: insertPasswordController,
                 decoration: InputDecoration(labelText: "mot de passe"),
+              ),
+               GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/');
+                },
+                child: const Text(
+                  "Déjà un compte ? Connectez-vous ici !",
+                  style: TextStyle(decoration: TextDecoration.underline),
+                ),
               ),
               Row(
                 children: [
