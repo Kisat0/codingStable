@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../pages/mongo.dart';
+import 'package:futter_stable/models/Contest.dart';
 void main() {
   runApp(PageConcoursApp());
 }
@@ -25,16 +28,26 @@ class _MyFormState extends State<MyForm> {
   TextEditingController _addressController = TextEditingController();
   TextEditingController _dateController = TextEditingController();
   DateTime? _selectedDate;
+  XFile? _selectedImage;
 
-  void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      // Ajoutez ici la logique pour enregistrer le concours
-      // Utilisez les valeurs des contrôleurs _nameController, _addressController, et _dateController
+   Future<void> insertConcours(String name, String adress, DateTime date,File picture, ) async
+  {
+    var newContestId = mongo.ObjectId(); // Generation of a unique id
+    final newContest = ContestModel(
+      name: name,
+      picture: picture,
+      adress: adress,
+      date: date,
+      level: '',);
+    var result = await MongoDataBase.insertContest(newContest);
+    //return result;
+    ScaffoldMessenger.of(context)
+    .showSnackBar(SnackBar(content: Text("inserted Id" + newContestId.$oid)));
 
-      // Par exemple, affichez les données enregistrées dans la consol
-    }
   }
+
+
+   
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime picked = (await showDatePicker(
@@ -117,7 +130,11 @@ class _MyFormState extends State<MyForm> {
                 },
               ),
               ElevatedButton(
-                onPressed: _submitForm,
+                onPressed: (){
+                  if(_formKey.currentState.validate()){
+                    insertConcours(_nameController, _addressController, _dateController, imageState);
+                  }
+                },
                 child: Text('Enregistrer le concours'),
               ),
             ],

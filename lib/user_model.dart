@@ -17,4 +17,4 @@ class User {
   UserToString(){
     return 'User{_id: $_id, pseudo: $pseudo, email: $email, mdp: $mdp, role: $role, photo: $photo, phone_number: $phone_number, age: $age, FFE_link: $FFE_link}';
   }
-}
+  }

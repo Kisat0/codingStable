@@ -4,6 +4,7 @@ import 'package:futter_stable/contest/listeconcours.dart';
 import 'package:futter_stable/contest/pageconcours.dart';
 import 'package:futter_stable/parties/listeparties.dart';
 import 'trainings/pagetrainings.dart';
+import 'package:futter_stable/register.dart';
 
 class HomePage extends StatefulWidget {
   final dynamic db;
@@ -85,7 +86,7 @@ class _HomePageState extends State<HomePage> {
         ),
         Container(
           alignment: Alignment.center,
-          child: const Text('Page 2'),
+          child: RegisterPage(title: 'toto',),
         ),
         Container(
           alignment: Alignment.center,
