@@ -1,3 +1,5 @@
+import 'package:futter_stable/models/course.dart';
+
 import 'env.dart';
 import 'dart:developer';
 import 'package:mongo_dart/mongo_dart.dart';
@@ -24,7 +26,6 @@ class MongoDataBase {
     return db;
   }
 
-
   static late Db staticDb;
   static late DbCollection _staticUsersCollection;
   static late DbCollection _staticHorsesCollection;
@@ -34,26 +35,34 @@ class MongoDataBase {
   static late DbCollection _staticCommentsCollection;
 
   static Future<String> insertUser(UserModel user) async {
-    try
-    {
+    try {
       // Business object must be converted to json data object before inserting.
       var result = await _staticUsersCollection.insertOne(user.toJson());
-      if (result.isSuccess){
+      if (result.isSuccess) {
         print("toto est insérér");
         return "success";
-      }
-      else
-      {
+      } else {
         return "an error as occurred";
       }
-    }
-    catch (e)
-    {
+    } catch (e) {
       print(e.toString());
       return e.toString();
     }
   }
 
-
-
+  static Future<String> insertCourse(CourseModel course) async {
+    try {
+      // Business object must be converted to json data object before inserting.
+      var result = await _staticCoursesCollection.insertOne(course.toJson());
+      if (result.isSuccess) {
+        print("course add");
+        return "success";
+      } else {
+        return "an error as occurred";
+      }
+    } catch (e) {
+      print(e.toString());
+      return e.toString();
+    }
+  }
 }

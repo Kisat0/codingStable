@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:futter_stable/models/course.dart';
+import 'package:futter_stable/mongo.dart';
+import 'package:mongo_dart/mongo_dart.dart' as mongo;
 
 void main() {
   runApp(CoursesPage());
@@ -31,13 +34,23 @@ class _MyFormState extends State<MyForm> {
   String _duration = '';
   String _speciality = 'Dressage';
   DateTime? _selectedDate;
-  List<String> _usersId = [];
+  List<String> _CoursesId = [];
   List<String> itemsTerrain = ['Carrière', 'Manège'];
   List<String> itemsSpeciality = ['Dressage', "Saut d'obstable", 'Endurance'];
-  void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-    }
+
+  Future<void> insertCourse(
+      String terrain, String duration, String speciality, DateTime date) async {
+    final newCourse = CourseModel(
+        terrain: terrain,
+        duration: duration,
+        speciality: speciality,
+        date: date,
+        isVerified: false,
+        participantsId: []);
+    var result = await MongoDataBase.insertCourse(newCourse);
+    //return result;
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("inserted Id")));
   }
 
   void dropdownCallbackTerrain(String? selectedValue) {
@@ -132,7 +145,11 @@ class _MyFormState extends State<MyForm> {
             },
           ),
           ElevatedButton(
-            onPressed: _submitForm,
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                insertCourse(_terrain, _duration, _speciality, _selectedDate!);
+              }
+            },
             child: Text('Soumettre'),
           ),
         ],
