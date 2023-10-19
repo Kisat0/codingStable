@@ -32,30 +32,6 @@ class _AdminValidationState extends State<AdminValidation> {
     return result;
   }
 
-  void validateCourse(List<dynamic> course) {
-    try {
-      var collection = widget.db.collection('courses');
-      collection.replaceOne({
-        '_id': course[0]['_id']
-      }, {
-        'terrain': course[0]['terrain'],
-        'duration': course[0]['duration'],
-        'speciality': course[0]['speciality'],
-        'isVerified': true,
-        'date': course[0]['date'],
-        'idsUsers': course[0]['idsUsers'],
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Demande acceptée')),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Erreur lors de la validation de la demande')),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     if (role != 'admin') {
