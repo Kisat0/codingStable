@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:futter_stable/mongo.dart';
 import 'package:futter_stable/homepage.dart';
 //import 'package:mongo_dart/mongo_dart.dart';
+import 'package:futter_stable/register.dart';
+
 
 Future<void> main() async {
   var db = await MongoDataBase.connect();
@@ -18,10 +20,11 @@ class MainApp extends StatelessWidget {
 
         return MaterialApp(
       title: 'Horse',
-      debugShowCheckedModeBanner: false,
-      routes: {
-        '/': (context) => HomePage(db: db),
-      },
+      //debugShowCheckedModeBanner: false,
+      //routes: {
+      //  '/': (context) => HomePage(db: db),
+      //},
+          home: const HomePage(),
       theme: ThemeData(
         primarySwatch: Colors.orange,
         scaffoldBackgroundColor: Colors.white.withAlpha(12000),

@@ -1,3 +1,5 @@
+import 'constants.dart';
+import 'models/User.dart';
 import 'env.dart';
 import 'dart:developer';
 import 'package:mongo_dart/mongo_dart.dart';
@@ -11,7 +13,44 @@ class MongoDataBase {
     inspect(status);
 
     print("connection faite");
-
+    
+    staticDb = db;
+    _staticUsersCollection = db.collection(USERS_COLLECTION_NAME);
+    //_staticHorsesCollection = db.collection(HORSES_COLLECTION_NAME);
+    //_staticContestsCollection = db.collection(CONTESTS_COLLECTION_NAME);
+    //_staticPartiesCollection = db.collection(PARTIES_COLLECTION_NAME);
+    //_staticCoursesCollection = db.collection(COURSES_COLLECTION_NAME);
+    //_staticCommentsCollection = db.collection(COMMENTS_COLLECTION_NAME);
     return db;
+  }
+
+  static late Db staticDb;
+  static late DbCollection _staticUsersCollection;
+  //static late DbCollection _staticHorsesCollection;
+  //static late DbCollection _staticContestsCollection;
+  //static late DbCollection _staticPartiesCollection;
+  //static late DbCollection _staticCoursesCollection;
+  //static late DbCollection _staticCommentsCollection;
+
+
+  static Future<String> insertUser(User user) async {
+    try
+    {
+      // Business object must be converted to json data object before inserting.
+      var result = await _staticUsersCollection.insertOne(user.toJson());
+      if (result.isSuccess){
+        print("toto est insérér");
+        return "success";
+      }
+      else
+      {
+          return "an error as occurred";
+      }
+    }
+    catch (e)
+    {
+      print(e.toString());
+      return e.toString();
+    }
   }
 }

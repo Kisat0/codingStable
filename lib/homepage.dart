@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:futter_stable/register.dart';
 
 class HomePage extends StatefulWidget {
   final dynamic db;
@@ -79,7 +80,7 @@ class _HomePageState extends State<HomePage> {
         ),
         Container(
           alignment: Alignment.center,
-          child: const Text('Page 2'),
+          child: RegisterPage(title: 'toto',),
         ),
         Container(
           alignment: Alignment.center,
