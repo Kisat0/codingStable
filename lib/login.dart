@@ -99,6 +99,15 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyle(decoration: TextDecoration.underline),
                 ),
               ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/register');
+                },
+                child: const Text(
+                  "Pas encore de compte ? Inscrivez-vous ici !",
+                  style: TextStyle(decoration: TextDecoration.underline),
+                ),
+              ),
               ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
