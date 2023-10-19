@@ -47,7 +47,8 @@ class _AdminValidationState extends State<AdminValidation> {
 
   Future<List<dynamic>> getUsers() async {
     var collection = widget.db.collection('users');
-    var result = await collection.find().toList();
+    // get all users who are not admin
+    var result = await collection.find({'role': {'\$ne': 'admin'}}).toList();
     return result;
   }
 
