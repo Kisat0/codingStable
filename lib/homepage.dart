@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:futter_stable/admin_validation.dart';
 
 class HomePage extends StatefulWidget {
   final dynamic db;
@@ -111,7 +112,7 @@ class _HomePageState extends State<HomePage> {
         ),
         Container(
           alignment: Alignment.center,
-          child: const Text('Page 10'),
+          child: AdminValidation(db: widget.db),
         ),
         Container(
           alignment: Alignment.center,
