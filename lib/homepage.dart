@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:futter_stable/pageconcours.dart';
 
 class HomePage extends StatefulWidget {
   final dynamic db;
@@ -54,6 +55,7 @@ class _HomePageState extends State<HomePage> {
               selectedIcon: Icon(Icons.home),
               icon: Icon(Icons.home_outlined),
               label: 'Concours'),
+          
           NavigationDestination(
               selectedIcon: Icon(Icons.home),
               icon: Icon(Icons.home_outlined),
@@ -97,10 +99,10 @@ class _HomePageState extends State<HomePage> {
           alignment: Alignment.center,
           child: const Text('Page 6'),
         ),
+
         Container(
-          alignment: Alignment.center,
-          child: const Text('Page 7'),
-        ),
+                alignment: Alignment.center,
+                child: PageConcours()),
         Container(
           alignment: Alignment.center,
           child: const Text('Page 8'),
