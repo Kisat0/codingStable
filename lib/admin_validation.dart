@@ -111,6 +111,7 @@ class _AdminValidationState extends State<AdminValidation> {
                                               content:
                                                   Text('Demande acceptée')),
                                         );
+                                        setState(() {});
                                       } catch (e) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
@@ -135,6 +136,7 @@ class _AdminValidationState extends State<AdminValidation> {
                                                 content:
                                                     Text('Demande refusée')),
                                           );
+                                          setState(() {});
                                         } catch (e) {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
@@ -165,7 +167,7 @@ class _AdminValidationState extends State<AdminValidation> {
                     return ListView.builder(
                       itemCount: snapshot.data?.length,
                       itemBuilder: (context, index) {
-                       return Card(
+                        return Card(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
@@ -226,6 +228,7 @@ class _AdminValidationState extends State<AdminValidation> {
                                                 content:
                                                     Text('Demande refusée')),
                                           );
+                                          setState(() {});
                                         } catch (e) {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
@@ -256,7 +259,7 @@ class _AdminValidationState extends State<AdminValidation> {
                     return ListView.builder(
                       itemCount: snapshot.data?.length,
                       itemBuilder: (context, index) {
-                       return Card(
+                        return Card(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
@@ -271,33 +274,35 @@ class _AdminValidationState extends State<AdminValidation> {
                                       onPressed: () async {
                                         var collection =
                                             widget.db.collection('users');
-                                        var collectionHorses = widget.db
-                                            .collection('horses');
-                                        var collectionCourses = widget.db
-                                            .collection('courses');
-                                        var collectionParties = widget.db
-                                            .collection('parties');
+                                        var collectionHorses =
+                                            widget.db.collection('horses');
+                                        var collectionCourses =
+                                            widget.db.collection('courses');
+                                        var collectionParties =
+                                            widget.db.collection('parties');
                                         try {
-                                         await collection.deleteOne({
+                                          await collection.deleteOne({
                                             '_id': snapshot.data?[index]['_id']
                                           });
                                           await collectionHorses.deleteMany({
-                                            'idOwner': snapshot.data?[index]['_id']
+                                            'idOwner': snapshot.data?[index]
+                                                ['_id']
                                           });
                                           await collectionCourses.deleteMany({
-                                            'idsUsers':
-                                                snapshot.data?[index]['_id']
+                                            'idsUsers': snapshot.data?[index]
+                                                ['_id']
                                           });
                                           await collectionParties.deleteMany({
-                                            'idsUsers':
-                                                snapshot.data?[index]['_id']
+                                            'idsUsers': snapshot.data?[index]
+                                                ['_id']
                                           });
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             const SnackBar(
-                                                content:
-                                                    Text('Utilisateur supprimé')),
+                                                content: Text(
+                                                    'Utilisateur supprimé')),
                                           );
+                                          setState(() {});
                                         } catch (e) {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
@@ -307,7 +312,14 @@ class _AdminValidationState extends State<AdminValidation> {
                                           );
                                         }
                                       },
-                                      child: const Text('Supprimer'), style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.red), foregroundColor: MaterialStateProperty.all<Color>(Colors.white)))
+                                      child: const Text('Supprimer'),
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                                  Colors.red),
+                                          foregroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                                  Colors.white)))
                                 ],
                               ),
                             ],
