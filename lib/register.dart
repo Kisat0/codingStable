@@ -4,7 +4,6 @@ import 'package:mongo_dart/mongo_dart.dart' as mongo;
 
 import 'models/UserModel.dart';
 
-
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key, required this.title});
 
@@ -21,15 +20,19 @@ class _RegisterPageState extends State<RegisterPage> {
   var insertEmailController = new TextEditingController();
   var insertPasswordController = new TextEditingController();
 
-  Future<void> insertUser(String name, String email, String mdp) async
-  {
+  Future<void> insertUser(String name, String email, String mdp) async {
     var newUserId = mongo.ObjectId(); // Generation of a unique id
-    final newUser = UserModel(id: newUserId, pseudo: 'toto', email: 'toto@gmail.com', mdp: '123', role: 'user', userId: null);
+    final newUser = UserModel(
+        id: newUserId,
+        pseudo: 'toto',
+        email: 'toto@gmail.com',
+        mdp: '123',
+        role: 'user',
+        userId: null);
     var result = await MongoDataBase.insertUser(newUser);
     //return result;
     ScaffoldMessenger.of(context)
-    .showSnackBar(SnackBar(content: Text("inserted Id" + newUserId.$oid)));
-
+        .showSnackBar(SnackBar(content: Text("inserted Id" + newUserId.$oid)));
   }
 
   void _incrementCounter() {
@@ -37,10 +40,10 @@ class _RegisterPageState extends State<RegisterPage> {
       _counter++;
     });
   }
-//remove dependency id , add other constant , make collection inside mongo private 
+
+//remove dependency id , add other constant , make collection inside mongo private
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -54,7 +57,9 @@ class _RegisterPageState extends State<RegisterPage> {
             children: <Widget>[
               const Text('JACQUE CHIRAC :'),
               Text("insert data"),
-              SizedBox(height: 50,),
+              SizedBox(
+                height: 50,
+              ),
               TextField(
                 controller: insertNameController,
                 decoration: InputDecoration(labelText: "name"),
@@ -68,9 +73,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 decoration: InputDecoration(labelText: "mot de passe"),
               ),
               Row(
-                children: [ OutlinedButton(onPressed: () {insertUser("toto", "email", "mdp");}, child: Text("validate")) ],
+                children: [
+                  OutlinedButton(
+                      onPressed: () {
+                        insertUser("toto", "email", "mdp");
+                      },
+                      child: Text("validate"))
+                ],
               )
-
             ],
           ),
         ),

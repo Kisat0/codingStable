@@ -60,7 +60,6 @@ class _HomePageState extends State<HomePage> {
               selectedIcon: Icon(Icons.home),
               icon: Icon(Icons.home_outlined),
               label: 'Concours'),
-          
           NavigationDestination(
               selectedIcon: Icon(Icons.home),
               icon: Icon(Icons.home_outlined),
@@ -86,7 +85,9 @@ class _HomePageState extends State<HomePage> {
         ),
         Container(
           alignment: Alignment.center,
-          child: RegisterPage(title: 'toto',),
+          child: RegisterPage(
+            title: 'toto',
+          ),
         ),
         Container(
           alignment: Alignment.center,
@@ -104,7 +105,6 @@ class _HomePageState extends State<HomePage> {
           alignment: Alignment.center,
           child: PageTrainingApp(),
         ),
-
         Container(
                 alignment: Alignment.center,
                 child: ListeConcours()),

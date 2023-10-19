@@ -1,9 +1,11 @@
+import 'dart:ffi';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import '../pages/mongo.dart';
-import 'package:futter_stable/models/Contest.dart';
+import 'package:futter_stable/models/contest.dart';
+import 'package:futter_stable/mongo.dart';
+import 'package:mongo_dart/mongo_dart.dart' as mongo;
+
 void main() {
   runApp(PageConcoursApp());
 }
@@ -30,24 +32,25 @@ class _MyFormState extends State<MyForm> {
   DateTime? _selectedDate;
   XFile? _selectedImage;
 
-   Future<void> insertConcours(String name, String adress, DateTime date,File picture, ) async
-  {
+  Future<void> insertContest(
+    String name,
+    String adress,
+    DateTime date,
+  ) async {
     var newContestId = mongo.ObjectId(); // Generation of a unique id
     final newContest = ContestModel(
       name: name,
-      picture: picture,
+      picture: 'picture',
       adress: adress,
       date: date,
-      level: '',);
+      level: '',
+      participantsId: [],
+    );
     var result = await MongoDataBase.insertContest(newContest);
     //return result;
-    ScaffoldMessenger.of(context)
-    .showSnackBar(SnackBar(content: Text("inserted Id" + newContestId.$oid)));
-
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("inserted Id" + newContestId.$oid)));
   }
-
-
-   
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime picked = (await showDatePicker(
@@ -111,9 +114,6 @@ class _MyFormState extends State<MyForm> {
                   _selectDate(context); // Show the date picker
                 },
               ),
-             
-
-
               MaterialButton(
                 color: Colors.blue,
                 child: const Text("Choisissez une image"),
@@ -121,18 +121,19 @@ class _MyFormState extends State<MyForm> {
                   final imagePicker = ImagePicker();
                   final image =
                       await imagePicker.pickImage(source: ImageSource.gallery);
-                      if(image == null) {
-                        setState((){
-                          var imageState = imagePicker;
-                        });
-                      };
-
+                  if (image == null) {
+                    setState(() {
+                      var imageState = imagePicker;
+                    });
+                  }
+                  ;
                 },
               ),
               ElevatedButton(
-                onPressed: (){
-                  if(_formKey.currentState.validate()){
-                    insertConcours(_nameController, _addressController, _dateController, imageState);
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    insertContest(_nameController.text, _addressController.text,
+                        _selectedDate!);
                   }
                 },
                 child: Text('Enregistrer le concours'),
