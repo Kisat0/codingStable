@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:futter_stable/admin_validation.dart';
-import 'package:futter_stable/coursespage.dart';
-import 'package:futter_stable/pageconcours.dart';
+import 'package:futter_stable/register.dart';
 
 class HomePage extends StatefulWidget {
   final dynamic db;
@@ -82,7 +81,7 @@ class _HomePageState extends State<HomePage> {
         ),
         Container(
           alignment: Alignment.center,
-          child: const Text('Page 2'),
+          child: RegisterPage(title: 'toto',),
         ),
         Container(
           alignment: Alignment.center,
@@ -98,11 +97,11 @@ class _HomePageState extends State<HomePage> {
         ),
         Container(
           alignment: Alignment.center,
-          child: CoursesPage(),
+          child: const Text('Page 6'),
         ),
         Container(
           alignment: Alignment.center,
-          child: PageConcours(),
+          child: const Text('Page 7'),
         ),
         Container(
           alignment: Alignment.center,
