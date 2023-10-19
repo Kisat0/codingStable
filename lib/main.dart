@@ -5,7 +5,9 @@ import 'package:futter_stable/login.dart';
 import 'package:futter_stable/password_forgot.dart';
 import 'package:futter_stable/user_provider.dart';
 import 'package:futter_stable/reset_password.dart';
+import 'package:futter_stable/admin_validation.dart';
 import 'package:provider/provider.dart';
+
 
 Future<void> main() async {
   var db = await MongoDataBase.connect();
@@ -29,6 +31,7 @@ class MainApp extends StatelessWidget {
           '/home': (context) => HomePage(db: db),
           '/passwordForgot': (context) => ForgotPage(db: db),
           '/resetPassword': (context) => ResetPage(db: db),
+          '/adminValidation': (context) => AdminValidation(db: db),
         },
         theme: ThemeData(
           primarySwatch: Colors.blue,

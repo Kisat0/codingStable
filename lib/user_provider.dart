@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:futter_stable/user_model.dart';
 
 class UserProvider extends ChangeNotifier {
-  String? _loggedInUser;
+  User? _loggedInUser;
 
-  String? get loggedInUser => _loggedInUser;
+  User? get loggedInUser => _loggedInUser;
 
   bool get isLoggedIn => _loggedInUser != null;
 
-  void loginUser(String user) {
+  void loginUser(User user) {
     _loggedInUser = user;
     notifyListeners();
   }
