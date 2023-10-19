@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:futter_stable/pageconcours.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,11 +12,13 @@ class Concours {
   final String name;
   final String address;
   final String date;
+  final File photo;
 
   Concours({
     required this.name,
     required this.address,
     required this.date,
+    required this.photo,
   });
 }
 
@@ -30,9 +34,9 @@ class ListeConcours extends StatelessWidget {
 class UserList extends StatelessWidget {
   final List<Concours> users = [
     Concours(
-        name: 'Grand Tour Ecurie', address: '123 Main St', date: '2023-10-18'),
-    Concours(name: 'Etalon Tour', address: '456 Elm St', date: '2023-10-19'),
-    Concours(name: 'Grand Prix', address: '789 Oak St', date: '2023-10-20'),
+        name: 'Grand Tour Ecurie', address: '123 Main St', date: '2023-10-18', photo: File("path")),
+    Concours(name: 'Etalon Tour', address: '456 Elm St', date: '2023-10-19', photo: File("path")),
+    Concours(name: 'Grand Prix', address: '789 Oak St', date: '2023-10-20', photo: File("path")),
     // Add other fictional competitions here
   ];
 

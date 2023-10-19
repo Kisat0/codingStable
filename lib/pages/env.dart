@@ -1,0 +1,1 @@
+const MONGO_URL = "mongodb+srv://lucas:LupX2Mny2UPWYZ4h@cluster0.gulei9j.mongodb.net/codingStable";

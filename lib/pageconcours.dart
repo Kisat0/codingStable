@@ -80,7 +80,7 @@
 // }
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'pages/mongo.dart';
 void main() {
   runApp(PageConcoursApp());
 }
@@ -178,6 +178,9 @@ class _MyFormState extends State<MyForm> {
                   _selectDate(context); // Show the date picker
                 },
               ),
+             
+
+
               MaterialButton(
                 color: Colors.blue,
                 child: const Text("Choisissez une image"),
@@ -185,6 +188,12 @@ class _MyFormState extends State<MyForm> {
                   final imagePicker = ImagePicker();
                   final image =
                       await imagePicker.pickImage(source: ImageSource.gallery);
+                      if(image == null) {
+                        setState((){
+                          var imageState = imagePicker;
+                        });
+                      };
+
                 },
               ),
               ElevatedButton(
