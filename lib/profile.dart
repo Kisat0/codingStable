@@ -215,7 +215,6 @@ Widget build(BuildContext context) {
                                             content: Text('Cheval adopté ! :D ')),
                                       );
                                       setState(() {
-                                        
                                       });
                                     } catch (e) {
                                       ScaffoldMessenger.of(context)

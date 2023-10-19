@@ -47,7 +47,6 @@ class _AdminValidationState extends State<AdminValidation> {
 
   Future<List<dynamic>> getUsers() async {
     var collection = widget.db.collection('users');
-    // get all users who are not admin
     var result = await collection.find({'role': {'\$ne': 'admin'}}).toList();
     return result;
   }
@@ -103,8 +102,8 @@ class _AdminValidationState extends State<AdminValidation> {
                                               ['speciality'],
                                           'isVerified': true,
                                           'date': snapshot.data?[index]['date'],
-                                          'idsUsers': snapshot.data?[index]
-                                              ['idsUsers'],
+                                          'participantsId': snapshot.data?[index]
+                                              ['participantsId'],
                                         });
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
@@ -194,8 +193,8 @@ class _AdminValidationState extends State<AdminValidation> {
                                               ['picture'],
                                           'date': snapshot.data?[index]['date'],
                                           'isVerified': true,
-                                          'idsUsers': snapshot.data?[index]
-                                              ['idsUsers'],
+                                          'participantsId': snapshot.data?[index]
+                                              ['participantsId'],
                                           'com': snapshot.data?[index]['com'],
                                         });
 
@@ -290,11 +289,11 @@ class _AdminValidationState extends State<AdminValidation> {
                                                 ['_id']
                                           });
                                           await collectionCourses.deleteMany({
-                                            'idsUsers': snapshot.data?[index]
+                                            'participantsId': snapshot.data?[index]
                                                 ['_id']
                                           });
                                           await collectionParties.deleteMany({
-                                            'idsUsers': snapshot.data?[index]
+                                            'participantsId': snapshot.data?[index]
                                                 ['_id']
                                           });
                                           ScaffoldMessenger.of(context)

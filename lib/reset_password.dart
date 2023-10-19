@@ -18,7 +18,8 @@ class _ResetPageState extends State<ResetPage> {
 
   updateUserPassword(name, mail, password) async {
     var collection = widget.db.collection('users');
-    var u = await collection.findOne(mongo.where.eq('pseudo', name).eq('email', mail));
+    var u = await collection
+        .findOne(mongo.where.eq('pseudo', name).eq('email', mail));
     if (u != null) {
       collection.replaceOne(mongo.where.eq('pseudo', name).eq('email', mail), {
         'pseudo': u['pseudo'],
@@ -30,10 +31,11 @@ class _ResetPageState extends State<ResetPage> {
         'age': u['age'],
         'FFE_link': u['FFE_link'],
       });
-    }
-    else{
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Erreur lors de la réinitialisation du mot de passe')),
+        const SnackBar(
+            content:
+                Text('Erreur lors de la réinitialisation du mot de passe')),
       );
     }
   }
