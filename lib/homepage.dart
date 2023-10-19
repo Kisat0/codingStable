@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:futter_stable/listeconcours.dart';
-import 'package:futter_stable/pageconcours.dart';
+import 'package:futter_stable/contest/listeconcours.dart';
+import 'package:futter_stable/contest/pageconcours.dart';
+import 'package:futter_stable/parties/listeparties.dart';
+import 'trainings/pagetrainings.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -96,7 +98,7 @@ class _HomePageState extends State<HomePage> {
         ),
         Container(
           alignment: Alignment.center,
-          child: const Text('Page 6'),
+          child: PageTrainingApp(),
         ),
 
         Container(
@@ -104,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                 child: ListeConcours()),
         Container(
           alignment: Alignment.center,
-          child: const Text('Page 8'),
+          child: ListeParties(),
         ),
         Container(
           alignment: Alignment.center,

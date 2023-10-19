@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:futter_stable/pageconcours.dart';
+import 'package:futter_stable/contest/pageconcours.dart';
 import 'package:image_picker/image_picker.dart';
 
 void main() {
