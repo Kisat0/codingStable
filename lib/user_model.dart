@@ -11,6 +11,8 @@ class User {
   String? age;
   String? FFE_link;
 
+  get id => _id;
+
   User(this._id, this.pseudo, this.email, this.mdp, this.role, this.photo,
       this.phone_number, this.age, this.FFE_link);
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:futter_stable/admin_validation.dart';
 import 'package:futter_stable/coursespage.dart';
+import 'package:futter_stable/profile.dart';
 import 'package:futter_stable/register.dart';
 
 class HomePage extends StatefulWidget {
@@ -96,7 +97,7 @@ class _HomePageState extends State<HomePage> {
         ),
         Container(
           alignment: Alignment.center,
-          child: const Text('Page 5'),
+          child:  ProfilePage(db: widget.db),
         ),
         Container(
           alignment: Alignment.center,
