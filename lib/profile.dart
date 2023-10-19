@@ -16,6 +16,7 @@ class _ProfilePageState extends State<ProfilePage> {
   late User? user;
 
   final _formKey = GlobalKey<FormState>();
+
   late TextEditingController pseudoController;
   late TextEditingController mailController;
   late TextEditingController mdpController;
@@ -53,6 +54,7 @@ Widget build(BuildContext context) {
         children: [
           Expanded(
             child: Form(
+              key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -121,18 +123,22 @@ Widget build(BuildContext context) {
                   ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        var result = await widget.db.updateUser(
-                          user?.id,
-                          pseudoController.text,
-                          mailController.text,
-                          mdpController.text,
-                          user?.role,
-                          user?.photo,
-                          phoneController.text,
-                          ageController.text,
-                          ffeController.text,
+                        var result = await widget.db.collection("users").replaceOne(
+                          {
+                            '_id': user?.id
+                          },
+                          {
+                            'pseudo': pseudoController.text,
+                            'email': mailController.text,
+                            'mdp': mdpController.text,
+                            'role': user?.role,
+                            'photo': user?.photo,
+                            'phone_number': phoneController.text,
+                            'age': ageController.text,
+                            'FFE_link': ffeController.text,
+                          },
                         );
-                        if (result) {
+                        if (result != null) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('Profil mis à jour'),

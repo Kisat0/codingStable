@@ -28,6 +28,10 @@ class _LoginPageState extends State<LoginPage> {
     
     var result = await collection.find({'email': mail, 'mdp': mdpHash}).toList();
 
+    if (result.length == 0) {
+      return null;
+    }
+
     result = result[0];
 
     final user = User(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:futter_stable/admin_validation.dart';
 import 'package:futter_stable/coursespage.dart';
+import 'package:futter_stable/pageconcours.dart';
 import 'package:futter_stable/profile.dart';
 import 'package:futter_stable/register.dart';
 import 'package:futter_stable/user_provider.dart';
@@ -87,7 +88,7 @@ class _HomePageState extends State<HomePage> {
         ),
         Container(
           alignment: Alignment.center,
-          child: const Text('Page 3'),
+          child: ProfilePage(db: widget.db),
         ),
         Container(
           alignment: Alignment.center,
@@ -95,7 +96,7 @@ class _HomePageState extends State<HomePage> {
         ),
         Container(
           alignment: Alignment.center,
-          child:  ProfilePage(db: widget.db),
+          child:  PageConcours(),
         ),
         Container(
           alignment: Alignment.center,
