@@ -25,6 +25,7 @@ class _LoginPageState extends State<LoginPage> {
     var collection = db.collection('users');
     // hash the mdp to sha256
     var mdpHash = mdp;
+    
     var result = await collection.find({'email': mail, 'mdp': mdpHash}).toList();
 
     result = result[0];
