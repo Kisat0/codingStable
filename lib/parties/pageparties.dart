@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import '../pages/mongo.dart';
+
 void main() {
-  runApp(PageConcoursApp());
+  runApp(PagePartiesApp());
 }
 
-class PageConcoursApp extends StatelessWidget {
+class PagePartiesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,18 +21,20 @@ class MyForm extends StatefulWidget {
 
 class _MyFormState extends State<MyForm> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _addressController = TextEditingController();
   TextEditingController _dateController = TextEditingController();
+  TextEditingController _typeController = TextEditingController();
+
+  String? dropdownValue = 'Apéro';
+
+  var items = ['Apéro', 'Dîner'];
   DateTime? _selectedDate;
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      // Ajoutez ici la logique pour enregistrer le concours
-      // Utilisez les valeurs des contrôleurs _nameController, _addressController, et _dateController
-
-      // Par exemple, affichez les données enregistrées dans la consol
+      // Ajoutez ici la logique pour enregistrer la soirée
+      // Utilisez les valeurs des contrôleurs _dateController, dropdownValue, etc.
+      // Par exemple, affichez les données enregistrées dans la console
     }
   }
 
@@ -47,8 +49,7 @@ class _MyFormState extends State<MyForm> {
     if (picked != null) {
       setState(() {
         _selectedDate = picked;
-        _dateController.text =
-            '${picked.day}/${picked.month}/${picked.year}'; // Update the date field
+        _dateController.text = '${picked.day}/${picked.month}/${picked.year}';
       });
     }
   }
@@ -57,7 +58,7 @@ class _MyFormState extends State<MyForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Créer un nouveau concours'),
+        title: Text('Créer une nouvelle soirée'),
       ),
       body: Form(
         key: _formKey,
@@ -65,42 +66,34 @@ class _MyFormState extends State<MyForm> {
           padding: EdgeInsets.all(16.0),
           child: Column(
             children: <Widget>[
-              TextFormField(
-                controller: _nameController,
-                decoration: InputDecoration(labelText: 'Nom du concours'),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Veuillez renseigner le nom du concours';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _addressController,
-                decoration: InputDecoration(labelText: 'Adresse du concours'),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Veuillez renseigner l\'adresse du concours';
-                  }
-                  return null;
+              DropdownButton<String>(
+                value: dropdownValue,
+                icon: Icon(Icons.keyboard_arrow_down),
+                items: items.map((item) {
+                  return DropdownMenuItem<String>(
+                    value: item,
+                    child: Text(item),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    dropdownValue = newValue;
+                  });
                 },
               ),
               TextFormField(
                 controller: _dateController,
-                decoration: InputDecoration(labelText: 'Date du concours'),
+                decoration: InputDecoration(labelText: 'Date de la soirée'),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Veuillez renseigner la date du concours';
+                    return 'Veuillez renseigner la date de la soirée';
                   }
                   return null;
                 },
                 onTap: () {
-                  _selectDate(context); // Show the date picker
+                  _selectDate(context);
                 },
               ),
-             
-
-
               MaterialButton(
                 color: Colors.blue,
                 child: const Text("Choisissez une image"),
@@ -108,17 +101,16 @@ class _MyFormState extends State<MyForm> {
                   final imagePicker = ImagePicker();
                   final image =
                       await imagePicker.pickImage(source: ImageSource.gallery);
-                      if(image == null) {
-                        setState((){
-                          var imageState = imagePicker;
-                        });
-                      };
-
+                  if (image == null) {
+                    setState(() {
+                      // Gérer le cas où aucune image n'a été sélectionnée
+                    });
+                  }
                 },
               ),
               ElevatedButton(
                 onPressed: _submitForm,
-                child: Text('Enregistrer le concours'),
+                child: Text('Enregistrer la soirée'),
               ),
             ],
           ),

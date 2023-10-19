@@ -25,7 +25,8 @@ class _LoginPageState extends State<LoginPage> {
     var collection = db.collection('users');
     // hash the mdp to sha256
     var mdpHash = mdp;
-    var result = await collection.find({'email': mail, 'mdp': mdpHash}).toList();
+    var result =
+        await collection.find({'email': mail, 'mdp': mdpHash}).toList();
 
     result = result[0];
 
@@ -101,9 +102,11 @@ class _LoginPageState extends State<LoginPage> {
               ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    var user = await login(mailController.text, mdpController.text);
+                    var user =
+                        await login(mailController.text, mdpController.text);
                     if (user != null) {
-                      Provider.of<UserProvider>(context, listen: false).loginUser(user);
+                      Provider.of<UserProvider>(context, listen: false)
+                          .loginUser(user);
                       Navigator.pushNamed(context, '/home');
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Connexion réussie')),

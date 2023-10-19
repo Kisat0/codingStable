@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:futter_stable/contest/pageconcours.dart';
+import 'package:futter_stable/parties/pageparties.dart';
 import 'package:image_picker/image_picker.dart';
 
 void main() {
@@ -34,9 +34,20 @@ class ListeParties extends StatelessWidget {
 class UserList extends StatelessWidget {
   final List<Parties> users = [
     Parties(
-        name: 'Grand Tour Ecurie', address: '123 Main St', date: '2023-10-18', photo: File("path")),
-    Parties(name: 'Etalon Tour', address: '456 Elm St', date: '2023-10-19', photo: File("path")),
-    Parties(name: 'Grand Prix', address: '789 Oak St', date: '2023-10-20', photo: File("path")),
+        name: 'Grand Tour Ecurie',
+        address: '123 Main St',
+        date: '2023-10-18',
+        photo: File("path")),
+    Parties(
+        name: 'Etalon Tour',
+        address: '456 Elm St',
+        date: '2023-10-19',
+        photo: File("path")),
+    Parties(
+        name: 'Grand Prix',
+        address: '789 Oak St',
+        date: '2023-10-20',
+        photo: File("path")),
     // Add other fictional competitions here
   ];
 
@@ -44,7 +55,7 @@ class UserList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Liste des concours'),
+        title: Text('Liste des soirées'),
       ),
       body: Column(
         children: [
@@ -64,16 +75,14 @@ class UserList extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PageConcoursApp()));
+                  MaterialPageRoute(builder: (context) => PagePartiesApp()));
 
               // Handle the submission logic here
               // This function will be called when the submit button is pressed
               // You can access the selected competitions from the 'users' list
             },
-            child: Text('Créer un concours'),
+            child: Text('Créer une soirée'),
           ),
-
-       
         ],
       ),
     );
