@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:futter_stable/listeconcours.dart';
 import 'package:futter_stable/pageconcours.dart';
 
 class HomePage extends StatefulWidget {
@@ -100,7 +101,7 @@ class _HomePageState extends State<HomePage> {
 
         Container(
                 alignment: Alignment.center,
-                child: PageConcours()),
+                child: ListeConcours()),
         Container(
           alignment: Alignment.center,
           child: const Text('Page 8'),
