@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<User?> login(String mail, String mdp) async {
     var collection = db.collection('users');
-    // hash the mdp to sha256
+    //TODO: hash the mdp to sha256
     var mdpHash = mdp;
     
     var result = await collection.find({'email': mail, 'mdp': mdpHash}).toList();
