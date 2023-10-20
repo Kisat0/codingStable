@@ -1,4 +1,5 @@
 import 'package:futter_stable/models/course.dart';
+import 'package:mongo_dart/mongo_dart.dart';
 
 import 'env.dart';
 import 'dart:developer';
@@ -64,5 +65,13 @@ class MongoDataBase {
       print(e.toString());
       return e.toString();
     }
+  }
+
+  static Future<List<Map<String, dynamic>>> getCourses() async {
+    final cursor = await _staticCoursesCollection
+        .find(where.sortBy('_id', descending: true));
+    final coursesData = await cursor.toList();
+
+    return coursesData;
   }
 }
