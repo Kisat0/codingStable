@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:futter_stable/admin_validation.dart';
+import 'package:futter_stable/contest/pageconcours.dart';
 import 'package:futter_stable/courses_list_page.dart';
 import 'package:futter_stable/coursespage.dart';
 import 'package:futter_stable/pageconcours.dart';
+import 'package:futter_stable/parties/pageparties.dart';
 import 'package:futter_stable/profile.dart';
 import 'package:futter_stable/register.dart';
 import 'package:futter_stable/user_provider.dart';
@@ -67,7 +69,7 @@ class _HomePageState extends State<HomePage> {
           NavigationDestination(
               selectedIcon: Icon(Icons.home),
               icon: Icon(Icons.home_outlined),
-              label: 'Entraînement'),
+              label: 'X'),
           NavigationDestination(
               selectedIcon: Icon(Icons.home),
               icon: Icon(Icons.home_outlined),
@@ -93,19 +95,19 @@ class _HomePageState extends State<HomePage> {
         ),
         Container(
           alignment: Alignment.center,
-          child: CoursesPage(),
-        ),
-        Container(
-          alignment: Alignment.center,
-          child: PageConcours(),
-        ),
-        Container(
-          alignment: Alignment.center,
           child: CoursesListPage(db: widget.db),
         ),
         Container(
           alignment: Alignment.center,
-          child: const Text('Page 7'),
+          child: PageConcoursApp(),
+        ),
+        Container(
+          alignment: Alignment.center,
+          child: PagePartiesApp(),
+        ),
+        Container(
+          alignment: Alignment.center,
+          child: PagePartiesApp(),
         ),
         Container(
           alignment: Alignment.center,

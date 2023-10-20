@@ -1,10 +1,12 @@
+import 'package:futter_stable/models/party.dart';
 import 'package:futter_stable/models/course.dart';
-
+import 'models/contest.dart';
 import 'env.dart';
 import 'dart:developer';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'constants.dart';
 import 'models/UserModel.dart';
+
 
 class MongoDataBase {
   static connect() async {
@@ -65,4 +67,37 @@ class MongoDataBase {
       return e.toString();
     }
   }
+
+  static Future<String> insertContest(ContestModel course) async {
+    try {
+      // Business object must be converted to json data object before inserting.
+      var result = await _staticContestsCollection.insertOne(course.toJson());
+      if (result.isSuccess) {
+        print("course add");
+        return "success";
+      } else {
+        return "an error as occurred";
+      }
+    } catch (e) {
+      print(e.toString());
+      return e.toString();
+    }
+  }
+
+  static Future<String> insertParty(PartyModel course) async {
+    try {
+      // Business object must be converted to json data object before inserting.
+      var result = await _staticPartiesCollection.insertOne(course.toJson());
+      if (result.isSuccess) {
+        print("Party add with success");
+        return "success";
+      } else {
+        return "an error as occurred";
+      }
+    } catch (e) {
+      print(e.toString());
+      return e.toString();
+    }
+  }
+
 }

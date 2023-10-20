@@ -23,10 +23,11 @@ class _ProfilePageState extends State<ProfilePage> {
   late TextEditingController phoneController;
   late TextEditingController ageController;
   late TextEditingController ffeController;
+  late TextEditingController photoController;
 
   Future<List<dynamic>> getAllAvailableHorses() async {
     var collection = widget.db.collection('horses');
-    var result = await collection.find({'idOwner': null}).toList();
+    var result = await collection.find().toList();
     return result;
   }
 
@@ -41,6 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
     phoneController = TextEditingController(text: user?.phone_number);
     ageController = TextEditingController(text: user?.age);
     ffeController = TextEditingController(text: user?.FFE_link);
+    photoController = TextEditingController(text: user?.photo);
   }
 
 @override
@@ -62,7 +64,7 @@ Widget build(BuildContext context) {
                     width: 200,
                     height: 200,
                     child: Image.network(
-                      user?.photo ??
+                      photoController.text ??
                           "https://i.pinimg.com/originals/57/51/ab/5751ab5082e364477876a999b688a8b5.jpg",
                     ),
                   ),
@@ -120,6 +122,12 @@ Widget build(BuildContext context) {
                       hintText: 'Lien FFE',
                     ),
                   ),
+                  TextFormField(
+                    controller: photoController,
+                    decoration: const InputDecoration(
+                      hintText: 'Lien de la photo',
+                    ),
+                  ),
                   ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
@@ -132,13 +140,14 @@ Widget build(BuildContext context) {
                             'email': mailController.text,
                             'mdp': mdpController.text,
                             'role': user?.role,
-                            'photo': user?.photo,
+                            'photo': photoController.text,
                             'phone_number': phoneController.text,
                             'age': ageController.text,
                             'FFE_link': ffeController.text,
                           },
                         );
                         if (result != null) {
+                          setState(() {   });
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('Profil mis à jour'),
@@ -160,84 +169,83 @@ Widget build(BuildContext context) {
             ),
           ),
           Expanded(
-            child: FutureBuilder(
-              future: getAllAvailableHorses(),
-              builder: (context, snapshot) {
-                if (snapshot.data?.length != null &&
-                    snapshot.data!.isNotEmpty) {
-                  return ListView.builder(
-                    itemCount: snapshot.data?.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            SizedBox(
-                              width: 100,
-                              height: 100,
-                              child: Image.network(
-                                snapshot.data?[index]["photo"] ??
-                                    "https://i.pinimg.com/originals/57/51/ab/5751ab5082e364477876a999b688a8b5.jpg",
-                              ),
-                            ),
-                            ListTile(
-                              title: Text(snapshot.data?[index]['name']),
-                              subtitle: Text(snapshot.data?[index]['race']),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[
-                                TextButton(
-                                  child: const Text('Adopter'),
-                                  onPressed: () {
-                                    try {
-                                      var collection =
-                                          widget.db.collection('horses');
-                                      collection.replaceOne(
-                                        {
-                                          '_id':
-                                              snapshot.data?[index]['_id']
-                                        },
-                                        {
-                                          'name': snapshot.data?[index]['name'],
-                                          'photo': snapshot.data?[index]['photo'],
-                                          'coat': snapshot.data?[index]['coat'],
-                                          'race': snapshot.data?[index]['race'],
-                                          'specialities': snapshot.data?[index]['specialities'],
-                                          'sexe': snapshot.data?[index]['sexe'],
-                                          'idOwner': user?.id,
-                                        },
-                                      );
+       child: FutureBuilder(
+  future: getAllAvailableHorses(),
+  builder: (context, snapshot) {
+    if (snapshot.data?.length != null && snapshot.data!.isNotEmpty) {
+      return ListView.builder(
+        itemCount: snapshot.data?.length,
+        itemBuilder: (context, index) {
+          bool isOwnerNull = snapshot.data?[index]['idOwner'] == null;
 
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                            content: Text('Cheval adopté ! :D ')),
-                                      );
-                                      setState(() {
-                                      });
-                                    } catch (e) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                            content: Text(
-                                                'Erreur lors de la validation de la demande')),
-                                      );
-                                    }
-                                  },
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  );
-                } else {
-                  return const Text("Pas de chevaux disponibles");
-                }
-              },
+          return Card(
+            color: isOwnerNull ? Colors.red : null, 
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: Image.network(
+                    snapshot.data?[index]["photo"] ??
+                        "https://i.pinimg.com/originals/57/51/ab/5751ab5082e364477876a999b688a8b5.jpg",
+                  ),
+                ),
+                ListTile(
+                  title: Text(snapshot.data?[index]['name']),
+                  subtitle: Text(snapshot.data?[index]['race']),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    if (!isOwnerNull) // Show button only if idOwner is null
+                      TextButton(
+                        child: const Text('Adopter'),
+                        onPressed: () {
+                          try {
+                            var collection = widget.db.collection('horses');
+                            collection.replaceOne(
+                              {
+                                '_id': snapshot.data?[index]['_id']
+                              },
+                              {
+                                'name': snapshot.data?[index]['name'],
+                                'photo': snapshot.data?[index]['photo'],
+                                'coat': snapshot.data?[index]['coat'],
+                                'race': snapshot.data?[index]['race'],
+                                'specialities': snapshot.data?[index]['specialities'],
+                                'sexe': snapshot.data?[index]['sexe'],
+                                'idOwner': user?.id,
+                              },
+                            );
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Cheval adopté ! :D ')),
+                            );
+                            setState(() {});
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text(
+                                      'Erreur lors de la validation de la demande')),
+                            );
+                          }
+                        },
+                      ),
+                  ],
+                ),
+              ],
             ),
+          );
+        },
+      );
+    } else {
+      return const Text("Pas de chevaux disponibles");
+    }
+  },
+),
+
           ),
         ],
       ),
