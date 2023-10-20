@@ -73,19 +73,36 @@ class _MyFormState extends State<MyForm> {
   }
 
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime picked = (await showDatePicker(
+    final DateTime currentDate = DateTime.now();
+    final DateTime pickedDate = (await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
+      initialDate: currentDate,
+      firstDate: currentDate,
       lastDate: DateTime(2101),
     ))!;
 
-    if (picked != null) {
-      setState(() {
-        _selectedDate = picked;
-        _dateController.text =
-            '${picked.day}/${picked.month}/${picked.year}'; // Update the date field
-      });
+    if (pickedDate != null) {
+      final TimeOfDay currentTime = TimeOfDay.now();
+      final TimeOfDay? pickedTime = await showTimePicker(
+        context: context,
+        initialTime: currentTime,
+      );
+
+      if (pickedTime != null) {
+        final DateTime pickedDateTime = DateTime(
+          pickedDate.year,
+          pickedDate.month,
+          pickedDate.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        );
+
+        setState(() {
+          _selectedDate = pickedDateTime;
+          _dateController.text =
+              '${pickedDate.day}/${pickedDate.month}/${pickedDate.year} ${pickedTime.format(context)}';
+        });
+      }
     }
   }
 
