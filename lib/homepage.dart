@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> {
         ),
         Container(
           alignment: Alignment.center,
-          child: const Text('Page 2'),
+          child: const Text('Page 3'),
         ),
         Container(
           alignment: Alignment.center,
