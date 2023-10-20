@@ -3,6 +3,7 @@ import 'package:futter_stable/mongo.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mongo_dart/mongo_dart.dart' as mongo;
 import 'package:futter_stable/models/party.dart';
+
 void main() {
   runApp(PagePartiesApp());
 }
@@ -23,6 +24,8 @@ class MyForm extends StatefulWidget {
 
 class _MyFormState extends State<MyForm> {
   final _formKey = GlobalKey<FormState>();
+  TextEditingController _nameController = TextEditingController();
+
   TextEditingController _dateController = TextEditingController();
   TextEditingController _typeController = TextEditingController();
   String? dropdownValue = 'Apéro';
@@ -31,25 +34,20 @@ class _MyFormState extends State<MyForm> {
   XFile? _selectedImage;
 
   Future<void> insertParty(
-        dynamic picture,
-         DateTime date, 
-         String type)
-         async {
-              var newPartyId = mongo.ObjectId(); // Generation of a unique id
+      String name, dynamic picture, DateTime date, String type) async {
+    var newPartyId = mongo.ObjectId(); // Generation of a unique id
 
     final newParty = PartyModel(
-        picture : 'picture',
-        date : date,
-        type : type,
+        name: name,
+        picture: 'picture',
+        date: date,
+        type: type,
         participantsId: []);
     var result = await MongoDataBase.insertParty(newParty);
     //return result;
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text("inserted Id")));
   }
-
-
-
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
@@ -75,13 +73,15 @@ class _MyFormState extends State<MyForm> {
       });
     }
   }
-void dropdownCallback(String ? selectedValue ){
-  if(selectedValue is String){
-    setState((){
-      dropdownValue = selectedValue;
-    });
+
+  void dropdownCallback(String? selectedValue) {
+    if (selectedValue is String) {
+      setState(() {
+        dropdownValue = selectedValue;
+      });
+    }
   }
-} 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,8 +94,16 @@ void dropdownCallback(String ? selectedValue ){
           padding: EdgeInsets.all(16.0),
           child: Column(
             children: <Widget>[
-
-              
+              TextFormField(
+                controller: _nameController,
+                decoration: InputDecoration(labelText: 'Nom de la soirée'),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Veuillez renseigner le nom de votre soirée';
+                  }
+                  return null;
+                },
+              ),
               DropdownButton<String>(
                 value: dropdownValue,
                 icon: Icon(Icons.keyboard_arrow_down),
@@ -106,7 +114,6 @@ void dropdownCallback(String ? selectedValue ){
                   );
                 }).toList(),
                 onChanged: dropdownCallback,
-                
               ),
               TextFormField(
                 controller: _dateController,
@@ -137,10 +144,11 @@ void dropdownCallback(String ? selectedValue ){
               ),
               ElevatedButton(
                 onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                insertParty(_selectedImage, _selectedDate!, _typeController.text);
-              }
-            },
+                  if (_formKey.currentState!.validate()) {
+                    insertParty(_nameController.text, _selectedImage,
+                        _selectedDate!, _typeController.text);
+                  }
+                },
                 child: Text('Enregistrer la soirée'),
               ),
             ],
