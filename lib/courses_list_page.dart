@@ -99,27 +99,31 @@ class _CoursesListPageState extends State<CoursesListPage> {
   Widget displayUserCard(CourseModel course) {
     bool isConnected = course.participantsId.contains(user?.id);
 
-    return Card(
-      color: isConnected ? Colors.green : Colors.white,
-      child: Column(
-        children: [
-          Text("${course.terrain}"),
-          SizedBox(height: 10),
-          Text("${course.duration}"),
-          SizedBox(height: 10),
-          Text("${course.speciality}"),
-          SizedBox(height: 10),
-          Text("${course.date}"),
-          SizedBox(height: 10),
-          ElevatedButton(
-            onPressed: () {
-              mongo.ObjectId currentUserId = user?.id;
-              joinCourse(currentUserId, course);
-            },
-            child: Text(isConnected ? "Bon cours!" : "Rejoindre le cours"),
-          ),
-        ],
-      ),
-    );
+    if (course.isVerified) {
+      return Card(
+        color: isConnected ? Colors.green : Colors.white,
+        child: Column(
+          children: [
+            Text("${course.terrain}"),
+            SizedBox(height: 10),
+            Text("${course.duration}"),
+            SizedBox(height: 10),
+            Text("${course.speciality}"),
+            SizedBox(height: 10),
+            Text("${course.date}"),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
+                mongo.ObjectId currentUserId = user?.id;
+                joinCourse(currentUserId, course);
+              },
+              child: Text(isConnected ? "Bon cours!" : "Rejoindre le cours"),
+            ),
+          ],
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 }
