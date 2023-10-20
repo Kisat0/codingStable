@@ -1,55 +1,47 @@
 import 'dart:convert';
 import 'package:mongo_dart/mongo_dart.dart';
 
+ContestModel ContestModelFromJson(String str) =>
+    ContestModel.fromJson(json.decode(str));
 
-Contest contestFromJson(String str) => Contest.fromJson(json.decode(str));
+String ContestModelToJson(ContestModel data) => json.encode(data.toJson());
 
-String contestToJson(Contest data) => json.encode(data.toJson());
-
-class Contest {
-
+class ContestModel {
   // Constructor
-  Contest({
-    required this.id,
+  ContestModel({
     required this.name,
     required this.picture,
     required this.adress,
     required this.date,
     required this.level,
-    required this.sexe,
     required this.participantsId,
   });
 
   // Fields
-  ObjectId id;
   String name;
   dynamic picture;
   String adress;
   DateTime date;
   String level;
-  String sexe;
   List<ObjectId> participantsId;
 
   // utility conversion functions
-  factory Contest.fromJson(Map<String, dynamic> json) => Contest(
-    id: json["id"],
+  factory ContestModel.fromJson(Map<String, dynamic> json) => ContestModel(
     name: json["name"],
     picture: json["picture"],
     adress: json["adress"],
     date: json["date"],
     level: json["level"],
-    sexe: json["sexe"],
-    participantsId: List<ObjectId>.from(json["participantsId"].map((x) => x)),
+    participantsId:
+    List<ObjectId>.from(json["participantsId"].map((x) => x)),
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
     "name": name,
     "picture": picture,
     "adress": adress,
     "date": date,
     "level": level,
-    "sexe": sexe,
     "participantsId": List<dynamic>.from(participantsId.map((x) => x)),
   };
 }
