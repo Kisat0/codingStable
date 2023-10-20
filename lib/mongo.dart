@@ -72,7 +72,7 @@ class MongoDataBase {
       // Business object must be converted to json data object before inserting.
       var result = await _staticContestsCollection.insertOne(course.toJson());
       if (result.isSuccess) {
-        print("course add");
+        print("Course added with succes");
         return "success";
       } else {
         return "an error as occurred";
@@ -88,7 +88,7 @@ class MongoDataBase {
       // Business object must be converted to json data object before inserting.
       var result = await _staticPartiesCollection.insertOne(course.toJson());
       if (result.isSuccess) {
-        print("Party add with success");
+        print("Party added with success");
         return "success";
       } else {
         return "an error as occurred";
