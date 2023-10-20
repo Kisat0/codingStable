@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> {
           NavigationDestination(
               selectedIcon: Icon(Icons.home),
               icon: Icon(Icons.home_outlined),
-              label: 'Entraînement'),
+              label: 'X'),
           NavigationDestination(
               selectedIcon: Icon(Icons.home),
               icon: Icon(Icons.home_outlined),
