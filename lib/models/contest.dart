@@ -32,7 +32,7 @@ class Contest {
 
   // utility conversion functions
   factory Contest.fromJson(Map<String, dynamic> json) => Contest(
-    id: json["id"],
+    id: json["_id"],
     name: json["name"],
     picture: json["picture"],
     adress: json["adress"],
@@ -43,7 +43,7 @@ class Contest {
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
+    "_id": id,
     "name": name,
     "picture": picture,
     "adress": adress,

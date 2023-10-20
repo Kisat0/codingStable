@@ -65,4 +65,29 @@ class MongoDataBase {
       return e.toString();
     }
   }
+
+
+  static Future<List<Map<String, dynamic>>> getUsers() async {
+    final usersRecovered = await _staticUsersCollection.find().toList();
+    return usersRecovered;
+  }
+
+  static Future<List<Map<String, dynamic>>> getParties() async {
+    final partiesRecovered = await _staticPartiesCollection.find().toList();
+    return partiesRecovered;
+  }
+
+  static Future<List<Map<String, dynamic>>> getCourses() async {
+    final coursesRecovered = await _staticCoursesCollection.find().toList();
+    return coursesRecovered;
+  }
+
+  static Future<List<Map<String, dynamic>>> getContest() async {
+    final contestRecovered = await _staticContestsCollection.find().toList();
+    return contestRecovered;
+  }
+
+
+
+
 }

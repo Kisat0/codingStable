@@ -7,6 +7,8 @@ import 'package:futter_stable/register.dart';
 import 'package:futter_stable/user_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'feed.dart';
+
 class HomePage extends StatefulWidget {
   final dynamic db;
 
@@ -84,7 +86,7 @@ class _HomePageState extends State<HomePage> {
         ),
         Container(
           alignment: Alignment.center,
-          child: const Text('Page 2'),
+          child: FeedPage(),
         ),
         Container(
           alignment: Alignment.center,
