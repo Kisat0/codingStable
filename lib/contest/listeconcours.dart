@@ -1,80 +1,132 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:futter_stable/contest/pageconcours.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:futter_stable/coursespage.dart';
+import 'package:futter_stable/models/contest.dart';
+import 'package:futter_stable/models/course.dart';
+import 'package:futter_stable/mongo.dart';
+import 'package:futter_stable/pageconcours.dart';
+import 'package:futter_stable/user_model.dart';
+import 'package:futter_stable/user_provider.dart';
+import 'package:mongo_dart/mongo_dart.dart' as mongo;
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(ListeConcours());
-}
-
-class Concours {
-  final String name;
-  final String address;
-  final String date;
-  final File photo;
-
-  Concours({
-    required this.name,
-    required this.address,
-    required this.date,
-    required this.photo,
-  });
-}
-
-class ListeConcours extends StatelessWidget {
+class ContestListPage extends StatefulWidget {
+  const ContestListPage({Key? key, required this.db}) : super(key: key);
+  final dynamic db;
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: UserList(),
-    );
-  }
+  State<ContestListPage> createState() => _ContestListPageState();
 }
 
-class UserList extends StatelessWidget {
-  final List<Concours> users = [
-    Concours(
-        name: 'Grand Tour Ecurie', address: '123 Main St', date: '2023-10-18', photo: File("path")),
-    Concours(name: 'Etalon Tour', address: '456 Elm St', date: '2023-10-19', photo: File("path")),
-    Concours(name: 'Grand Prix', address: '789 Oak St', date: '2023-10-20', photo: File("path")),
-    // Add other fictional competitions here
-  ];
+class _ContestListPageState extends State<ContestListPage> {
+  late User? user;
+
+  Future<List<dynamic>> getAllContests() async {
+    var collection = widget.db.collection('contests');
+    var result = await collection.find().toList();
+    return result;
+  }
+
+  Future<void> joinContest(dynamic currentUserId, ContestModel contest) async {
+    var collection = widget.db.collection('contests');
+    if (!contest.participantsId.contains(currentUserId)) {
+      contest.participantsId.add(currentUserId);
+
+      await collection.update(
+        mongo.where.id(contest.id),
+        {
+          r'$set': {
+            'participantsId': contest.participantsId,
+          },
+        },
+      );
+    }
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("inserted Id")));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    user = Provider.of<UserProvider>(context, listen: false).loggedInUser;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Liste des concours'),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: users.length,
-              itemBuilder: (context, index) {
-                final user = users[index];
-                return ListTile(
-                  title: Text(user.name),
-                  subtitle: Text(user.address),
-                  trailing: Text(user.date),
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => PageConcoursApp(),
+                  ),
                 );
               },
+              child: Text("Créer un nouveau cours"),
             ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PageConcoursApp()));
-
-              // Handle the submission logic here
-              // This function will be called when the submit button is pressed
-              // You can access the selected competitions from the 'users' list
-            },
-            child: Text('Créer un concours'),
-          ),
-
-       
-        ],
+            Expanded(
+                child: FutureBuilder(
+                    future: getAllContests(),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
+                        if (snapshot.hasData) {
+                          var totalDataLength = snapshot.data.length;
+                          print(
+                              "total data found" + totalDataLength.toString());
+                          return ListView.builder(
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (context, index) {
+                                return displayUserCard(ContestModel.fromJson(
+                                    snapshot.data[index]));
+                              });
+                        } else {
+                          return Center(
+                            child: Text("no data available"),
+                          );
+                        }
+                      }
+                    })),
+          ],
+        ),
       ),
     );
+  }
+
+  Widget displayUserCard(ContestModel contest) {
+    bool isConnected = contest.participantsId.contains(user?.id);
+
+    if (contest.isVerified) {
+      return Card(
+        color: isConnected ? Colors.green : Colors.white,
+        child: Column(
+          children: [
+            Text("${contest.name}"),
+            SizedBox(height: 10),
+            Text("${contest.adress}"),
+            SizedBox(height: 10),
+            Text("${contest.date}"),
+            SizedBox(height: 10),
+            Text("${contest.picture}"),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
+                mongo.ObjectId currentUserId = user?.id;
+                joinContest(currentUserId, contest);
+              },
+              child: Text(isConnected ? "Bon cours!" : "Rejoindre le cours"),
+            ),
+          ],
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 }

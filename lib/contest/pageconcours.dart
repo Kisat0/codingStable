@@ -39,11 +39,13 @@ class _MyFormState extends State<MyForm> {
   ) async {
     var newContestId = mongo.ObjectId(); // Generation of a unique id
     final newContest = ContestModel(
+      id: newContestId,
       name: name,
       picture: 'picture',
       adress: adress,
       date: date,
       level: '',
+      isVerified: false,
       participantsId: [],
     );
     var result = await MongoDataBase.insertContest(newContest);

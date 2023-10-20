@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:futter_stable/admin_validation.dart';
+import 'package:futter_stable/contest/listeconcours.dart';
 import 'package:futter_stable/contest/pageconcours.dart';
 import 'package:futter_stable/courses_list_page.dart';
 import 'package:futter_stable/coursespage.dart';
@@ -100,7 +101,7 @@ class _HomePageState extends State<HomePage> {
         ),
         Container(
           alignment: Alignment.center,
-          child: PageConcoursApp(),
+          child: ContestListPage(db: widget.db),
         ),
         Container(
           alignment: Alignment.center,
