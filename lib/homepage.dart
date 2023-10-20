@@ -6,6 +6,7 @@ import 'package:futter_stable/courses_list_page.dart';
 import 'package:futter_stable/coursespage.dart';
 import 'package:futter_stable/feed.dart';
 import 'package:futter_stable/pageconcours.dart';
+import 'package:futter_stable/parties/listeparties.dart';
 import 'package:futter_stable/parties/pageparties.dart';
 import 'package:futter_stable/profile.dart';
 import 'package:futter_stable/register.dart';
@@ -105,7 +106,7 @@ class _HomePageState extends State<HomePage> {
         ),
         Container(
           alignment: Alignment.center,
-          child: PagePartiesApp(),
+          child: PartiesListPage(db: widget.db),
         ),
         Container(
           alignment: Alignment.center,

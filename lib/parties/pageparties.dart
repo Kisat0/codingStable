@@ -3,6 +3,7 @@ import 'package:futter_stable/mongo.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mongo_dart/mongo_dart.dart' as mongo;
 import 'package:futter_stable/models/party.dart';
+
 void main() {
   runApp(PagePartiesApp());
 }
@@ -30,26 +31,21 @@ class _MyFormState extends State<MyForm> {
   DateTime? _selectedDate;
   XFile? _selectedImage;
 
-  Future<void> insertParty(
-        dynamic picture,
-         DateTime date, 
-         String type)
-         async {
-              var newPartyId = mongo.ObjectId(); // Generation of a unique id
+  Future<void> insertParty(dynamic picture, DateTime date, String type) async {
+    var newPartyId = mongo.ObjectId(); // Generation of a unique id
 
     final newParty = PartyModel(
-        picture : 'picture',
-        date : date,
-        type : type,
+        id: newPartyId,
+        picture: 'picture',
+        date: date,
+        type: type,
+        isVerified: false,
         participantsId: []);
     var result = await MongoDataBase.insertParty(newParty);
     //return result;
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text("inserted Id")));
   }
-
-
-
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
@@ -75,13 +71,15 @@ class _MyFormState extends State<MyForm> {
       });
     }
   }
-void dropdownCallback(String ? selectedValue ){
-  if(selectedValue is String){
-    setState((){
-      dropdownValue = selectedValue;
-    });
+
+  void dropdownCallback(String? selectedValue) {
+    if (selectedValue is String) {
+      setState(() {
+        dropdownValue = selectedValue;
+      });
+    }
   }
-} 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,8 +92,6 @@ void dropdownCallback(String ? selectedValue ){
           padding: EdgeInsets.all(16.0),
           child: Column(
             children: <Widget>[
-
-              
               DropdownButton<String>(
                 value: dropdownValue,
                 icon: Icon(Icons.keyboard_arrow_down),
@@ -106,7 +102,6 @@ void dropdownCallback(String ? selectedValue ){
                   );
                 }).toList(),
                 onChanged: dropdownCallback,
-                
               ),
               TextFormField(
                 controller: _dateController,
@@ -137,10 +132,11 @@ void dropdownCallback(String ? selectedValue ){
               ),
               ElevatedButton(
                 onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                insertParty(_selectedImage, _selectedDate!, _typeController.text);
-              }
-            },
+                  if (_formKey.currentState!.validate()) {
+                    insertParty(
+                        _selectedImage, _selectedDate!, _typeController.text);
+                  }
+                },
                 child: Text('Enregistrer la soirée'),
               ),
             ],

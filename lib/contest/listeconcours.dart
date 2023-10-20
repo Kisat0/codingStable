@@ -65,7 +65,7 @@ class _ContestListPageState extends State<ContestListPage> {
                   ),
                 );
               },
-              child: Text("Créer un nouveau cours"),
+              child: Text("Créer un nouveau concours"),
             ),
             Expanded(
                 child: FutureBuilder(
@@ -120,7 +120,8 @@ class _ContestListPageState extends State<ContestListPage> {
                 mongo.ObjectId currentUserId = user?.id;
                 joinContest(currentUserId, contest);
               },
-              child: Text(isConnected ? "Bon cours!" : "Rejoindre le cours"),
+              child:
+                  Text(isConnected ? "Bon concours!" : "Rejoindre le concours"),
             ),
           ],
         ),
