@@ -28,6 +28,10 @@ class _LoginPageState extends State<LoginPage> {
     var result =
         await collection.find({'email': mail, 'mdp': mdpHash}).toList();
 
+    if (result.length == 0) {
+      return null;
+    }
+
     result = result[0];
 
     final user = User(
@@ -96,6 +100,15 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 child: const Text(
                   "Mot de passe oublié ?",
+                  style: TextStyle(decoration: TextDecoration.underline),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/register');
+                },
+                child: const Text(
+                  "Pas encore de compte ? Inscrivez-vous ici !",
                   style: TextStyle(decoration: TextDecoration.underline),
                 ),
               ),

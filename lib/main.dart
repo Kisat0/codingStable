@@ -3,6 +3,8 @@ import 'package:futter_stable/mongo.dart';
 import 'package:futter_stable/homepage.dart';
 import 'package:futter_stable/login.dart';
 import 'package:futter_stable/password_forgot.dart';
+import 'package:futter_stable/profile.dart';
+import 'package:futter_stable/register.dart';
 import 'package:futter_stable/user_provider.dart';
 import 'package:futter_stable/reset_password.dart';
 import 'package:futter_stable/admin_validation.dart';
@@ -32,6 +34,8 @@ class MainApp extends StatelessWidget {
           '/passwordForgot': (context) => ForgotPage(db: db),
           '/resetPassword': (context) => ResetPage(db: db),
           '/adminValidation': (context) => AdminValidation(db: db),
+          '/profile': (context) => ProfilePage(db: db),
+          '/register':(context) => RegisterPage(title: "Inscription",db: db),
         },
         theme: ThemeData(
           primarySwatch: Colors.blue,

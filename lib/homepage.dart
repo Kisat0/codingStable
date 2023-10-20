@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:futter_stable/admin_validation.dart';
+import 'package:futter_stable/coursespage.dart';
+import 'package:futter_stable/profile.dart';
 import 'package:futter_stable/contest/listeconcours.dart';
 import 'package:futter_stable/contest/pageconcours.dart';
 import 'package:futter_stable/parties/listeparties.dart';
 import 'trainings/pagetrainings.dart';
 import 'package:futter_stable/register.dart';
+import 'package:futter_stable/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   final dynamic db;
@@ -22,9 +26,17 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int index) {
+         onDestinationSelected: (int index) {
           setState(() {
-            currentPageIndex = index;
+            if (index == 8) {
+              Provider.of<UserProvider>(context, listen: false).logoutUser();
+              Navigator.pushNamed(context, '/');
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Déconnexion réussie')),
+              );
+            } else {
+              currentPageIndex = index;
+            }
           });
         },
         indicatorColor: Colors.lightBlue[800],
@@ -34,16 +46,6 @@ class _HomePageState extends State<HomePage> {
               selectedIcon: Icon(Icons.home),
               icon: Icon(Icons.home_outlined),
               label: 'Accueil'),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.person),
-            icon: Icon(Icons.person),
-            label: 'Inscription',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.dashboard),
-            icon: Icon(Icons.dashboard),
-            label: 'Connexion',
-          ),
           NavigationDestination(
               selectedIcon: Icon(Icons.home),
               icon: Icon(Icons.home_outlined),
@@ -75,7 +77,7 @@ class _HomePageState extends State<HomePage> {
           NavigationDestination(
               selectedIcon: Icon(Icons.home),
               icon: Icon(Icons.home_outlined),
-              label: 'Test'),
+              label: 'Logout'),
         ],
       ),
       body: <Widget>[
@@ -85,32 +87,31 @@ class _HomePageState extends State<HomePage> {
         ),
         Container(
           alignment: Alignment.center,
-          child: RegisterPage(
-            title: 'toto',
-          ),
+          child: const Text('Page 2'),
         ),
         Container(
           alignment: Alignment.center,
-          child: const Text('Page 3'),
+          child: ProfilePage(db: widget.db),
         ),
         Container(
           alignment: Alignment.center,
-          child: const Text('Page 4'),
+          child: CoursesPage(),
         ),
         Container(
           alignment: Alignment.center,
-          child: const Text('Page 5'),
+          child:  PageConcours(),
         ),
         Container(
           alignment: Alignment.center,
-          child: PageTrainingApp(),
+          child: CoursesPage(),
         ),
         Container(
-                alignment: Alignment.center,
-                child: ListeConcours()),
+          alignment: Alignment.center,
+          child: const Text('Page 7'),
+        ),
         Container(
           alignment: Alignment.center,
-          child: ListeParties(),
+          child: const Text('Page 8'),
         ),
         Container(
           alignment: Alignment.center,
@@ -119,14 +120,6 @@ class _HomePageState extends State<HomePage> {
         Container(
           alignment: Alignment.center,
           child: AdminValidation(db: widget.db),
-        ),
-        Container(
-          alignment: Alignment.center,
-          child: const Text('Page 11'),
-        ),
-        Container(
-          alignment: Alignment.center,
-          child: const Text('Page 12'),
         ),
       ][currentPageIndex],
     );
