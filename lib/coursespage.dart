@@ -40,7 +40,10 @@ class _MyFormState extends State<MyForm> {
 
   Future<void> insertCourse(
       String terrain, String duration, String speciality, DateTime date) async {
+    var newCourseId = mongo.ObjectId(); // Generation of a unique id
+
     final newCourse = CourseModel(
+        id: newCourseId,
         terrain: terrain,
         duration: duration,
         speciality: speciality,

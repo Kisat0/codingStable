@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> {
         ),
         Container(
           alignment: Alignment.center,
-          child: CoursesListPage(),
+          child: CoursesListPage(db: widget.db),
         ),
         Container(
           alignment: Alignment.center,

@@ -10,6 +10,7 @@ String CourseModelToJson(CourseModel data) => json.encode(data.toJson());
 class CourseModel {
   // Constructor
   CourseModel({
+    required this.id,
     required this.terrain,
     required this.duration,
     required this.speciality,
@@ -19,6 +20,7 @@ class CourseModel {
   });
 
   // Fields
+  ObjectId id;
   String terrain;
   String duration;
   String speciality;
@@ -27,7 +29,8 @@ class CourseModel {
   List<ObjectId> participantsId;
 
   // utility conversion functions
-  factory CourseModel.fromJson(Map<String, dynamic> json) => CourseModel(
+  factory CourseModel.fromJson(Map<String?, dynamic> json) => CourseModel(
+        id: json["_id"],
         terrain: json["terrain"],
         duration: json["duration"],
         speciality: json["speciality"],
@@ -38,6 +41,7 @@ class CourseModel {
       );
 
   Map<String, dynamic> toJson() => {
+        "_id": id,
         "terrain": terrain,
         "duration": duration,
         "speciality": speciality,
