@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
         ),
         Container(
           alignment: Alignment.center,
-          child: CoursesListPage(db: widget.db),
+          child: PagePartiesApp(),
         ),
         Container(
           alignment: Alignment.center,
