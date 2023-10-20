@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:futter_stable/admin_validation.dart';
 import 'package:futter_stable/coursespage.dart';
+import 'package:futter_stable/parties/pageparties.dart';
 import 'package:futter_stable/profile.dart';
 import 'package:futter_stable/contest/listeconcours.dart';
 import 'package:futter_stable/contest/pageconcours.dart';
@@ -26,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: NavigationBar(
-         onDestinationSelected: (int index) {
+        onDestinationSelected: (int index) {
           setState(() {
             if (index == 8) {
               Provider.of<UserProvider>(context, listen: false).logoutUser();
@@ -99,11 +100,11 @@ class _HomePageState extends State<HomePage> {
         ),
         Container(
           alignment: Alignment.center,
-          child:  PageConcours(),
+          child: PageConcoursApp(),
         ),
         Container(
           alignment: Alignment.center,
-          child: CoursesPage(),
+          child: PagePartiesApp(),
         ),
         Container(
           alignment: Alignment.center,
