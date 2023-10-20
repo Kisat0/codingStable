@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:futter_stable/add_horse/add_horse.dart';
 import 'package:futter_stable/admin_validation.dart';
 import 'package:futter_stable/contest/listeconcours.dart';
 import 'package:futter_stable/contest/pageconcours.dart';
@@ -110,7 +111,7 @@ class _HomePageState extends State<HomePage> {
         ),
         Container(
           alignment: Alignment.center,
-          child: PagePartiesApp(),
+          child: AddHorse(),
         ),
         Container(
           alignment: Alignment.center,

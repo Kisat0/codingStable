@@ -1,3 +1,4 @@
+import 'package:futter_stable/models/horse.dart';
 import 'package:futter_stable/models/party.dart';
 import 'package:futter_stable/models/course.dart';
 import 'models/contest.dart';
@@ -99,6 +100,22 @@ class MongoDataBase {
     }
   }
 
+
+static Future<String> insertHorse(Horse course) async {
+    try {
+      // Business object must be converted to json data object before inserting.
+      var result = await _staticHorsesCollection.insertOne(course.toJson());
+      if (result.isSuccess) {
+        print("Horse add with success");
+        return "success";
+      } else {
+        return "an error as occurred";
+      }
+    } catch (e) {
+      print(e.toString());
+      return e.toString();
+    }
+  }
   static Future<List<Map<String, dynamic>>> getUsers() async {
     final usersRecovered = await _staticUsersCollection.find().toList();
     return usersRecovered;
