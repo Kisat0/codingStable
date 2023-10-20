@@ -7,7 +7,6 @@ import 'package:mongo_dart/mongo_dart.dart';
 import 'constants.dart';
 import 'models/UserModel.dart';
 
-
 class MongoDataBase {
   static connect() async {
     var db = await Db.create(MONGO_URL);
@@ -100,4 +99,23 @@ class MongoDataBase {
     }
   }
 
+  static Future<List<Map<String, dynamic>>> getUsers() async {
+    final usersRecovered = await _staticUsersCollection.find().toList();
+    return usersRecovered;
+  }
+
+  static Future<List<Map<String, dynamic>>> getParties() async {
+    final partiesRecovered = await _staticPartiesCollection.find().toList();
+    return partiesRecovered;
+  }
+
+  static Future<List<Map<String, dynamic>>> getCourses() async {
+    final coursesRecovered = await _staticCoursesCollection.find().toList();
+    return coursesRecovered;
+  }
+
+  static Future<List<Map<String, dynamic>>> getContest() async {
+    final contestRecovered = await _staticContestsCollection.find().toList();
+    return contestRecovered;
+  }
 }

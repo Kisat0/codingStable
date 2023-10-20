@@ -3,6 +3,7 @@ import 'package:futter_stable/admin_validation.dart';
 import 'package:futter_stable/contest/pageconcours.dart';
 import 'package:futter_stable/courses_list_page.dart';
 import 'package:futter_stable/coursespage.dart';
+import 'package:futter_stable/feed.dart';
 import 'package:futter_stable/pageconcours.dart';
 import 'package:futter_stable/parties/pageparties.dart';
 import 'package:futter_stable/profile.dart';
@@ -87,7 +88,7 @@ class _HomePageState extends State<HomePage> {
         ),
         Container(
           alignment: Alignment.center,
-          child: const Text('Page 2'),
+          child: FeedPage(),
         ),
         Container(
           alignment: Alignment.center,
